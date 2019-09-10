@@ -1,4 +1,4 @@
-#Golang JWT Server
+# Golang JWT Server
 
 This is a simple jwt authentication server written in Golang with the Echo framework. 
 Much of the code came from Echo framework's tutorial on JWT : https://echo.labstack.com/middleware/jwt
