@@ -41,4 +41,5 @@ $ curl localhost:1323/restricted -H "Authorization: Bearer {{TOKEN}}"
 ### Improvements
 - Write more functions within the Login handler so it is smaller and easily testable. Eg. Write function to set custom claims. 
 - Write more tests especially for /restricted endpoint as well as the expiry times for each token. 
-- CI/CD deployment 
+- CI/CD 
+- Push docker image to registry for better container versioning
