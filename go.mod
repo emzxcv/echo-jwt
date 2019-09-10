@@ -1,4 +1,4 @@
-module github.com/emzxcv/go-jwt-2
+module github.com/emzxcv/echo-jwt
 
 go 1.13
 

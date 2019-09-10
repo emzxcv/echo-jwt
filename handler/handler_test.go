@@ -32,24 +32,12 @@ func TestLoginSuccess(t *testing.T) {
 	h := &Handler{}
 
 	// Assertions
-	if assert.NoError(t, h.login(c)) {
+	if assert.NoError(t, h.Login(c)) {
 		assert.Equal(t, http.StatusOK, rec.Code)
 		assert.Contains(t, rec.Body.String(), "token")
 		assert.Contains(t, rec.Body.String(), "refresh_token")
 	}
 }
-func TestRefreshUnauthorized(t *testing.T) {
-	// Setup
-	e := echo.New()
-	req := httptest.NewRequest(http.MethodGet, "/restricted", nil)
-	req.Header.Set(echo.HeaderAuthorization, "jk")
-	rec := httptest.NewRecorder()
-	c := e.NewContext(req, rec)
-	h := &Handler{}
-
-	assert.EqualError(t, h.restricted(c), "fails")
-}
-
 func TestBadUsername(t *testing.T) {
 	// Setup
 	e := echo.New()
@@ -60,7 +48,7 @@ func TestBadUsername(t *testing.T) {
 	h := &Handler{}
 
 	// Assertions
-	assert.EqualError(t, h.login(c), "code=401, message=Unauthorized")
+	assert.EqualError(t, h.Login(c), "code=401, message=Unauthorized")
 }
 
 func TestBadPassword(t *testing.T) {
@@ -73,7 +61,7 @@ func TestBadPassword(t *testing.T) {
 	h := &Handler{}
 
 	// Assertions
-	assert.EqualError(t, h.login(c), "code=401, message=Unauthorized")
+	assert.EqualError(t, h.Login(c), "code=401, message=Unauthorized")
 }
 
 func TestBadFormatJSON(t *testing.T) {
@@ -86,7 +74,7 @@ func TestBadFormatJSON(t *testing.T) {
 	h := &Handler{}
 
 	// Assertions
-	assert.EqualError(t, h.login(c), "code=401, message=Unauthorized")
+	assert.EqualError(t, h.Login(c), "code=401, message=Unauthorized")
 }
 
 func TestEndpointAccessible(t *testing.T) {
@@ -98,7 +86,7 @@ func TestEndpointAccessible(t *testing.T) {
 	h := &Handler{}
 
 	// Assertions
-	if assert.NoError(t, h.accessible(c)) {
+	if assert.NoError(t, h.Accessible(c)) {
 		assert.Equal(t, http.StatusOK, rec.Code)
 		assert.Contains(t, rec.Body.String(), "Accessible")
 	}

@@ -5,15 +5,14 @@ import (
 	"time"
 
 	"github.com/dgrijalva/jwt-go"
+	m "github.com/emzxcv/echo-jwt/models"
 	"github.com/labstack/echo"
 )
 
 type Handler struct{}
 
-func (h *Handler) login(c echo.Context) error {
-	// username := c.FormValue("username")
-	// password := c.FormValue("password")
-	u := new(User)
+func (h *Handler) Login(c echo.Context) error {
+	u := new(m.User)
 	if err := c.Bind(u); err != nil {
 		return echo.ErrBadRequest
 		// Check in your db if the user exists or not
@@ -25,7 +24,7 @@ func (h *Handler) login(c echo.Context) error {
 	}
 
 	// Set custom claims
-	claims := &jwtCustomClaims{
+	claims := &m.JwtCustomClaims{
 		"Jon Snow",
 		true,
 		jwt.StandardClaims{
@@ -43,7 +42,7 @@ func (h *Handler) login(c echo.Context) error {
 	}
 
 	// Set custom claims
-	rtClaims := &jwtCustomClaims{
+	rtClaims := &m.JwtCustomClaims{
 		"Jon Snow",
 		true,
 		jwt.StandardClaims{
@@ -66,13 +65,13 @@ func (h *Handler) login(c echo.Context) error {
 	})
 }
 
-func (h *Handler) accessible(c echo.Context) error {
+func (h *Handler) Accessible(c echo.Context) error {
 	return c.String(http.StatusOK, "Accessible. Please navigate to /login or /restricted.")
 }
 
-func (h *Handler) restricted(c echo.Context) error {
+func (h *Handler) Restricted(c echo.Context) error {
 	user := c.Get("user").(*jwt.Token)
-	claims := user.Claims.(*jwtCustomClaims)
+	claims := user.Claims.(*m.JwtCustomClaims)
 	name := claims.Name
 	return c.String(http.StatusOK, "Welcome "+name+"!")
 }
