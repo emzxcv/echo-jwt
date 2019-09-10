@@ -1,6 +1,6 @@
 # Golang JWT Server
 
-This is a simple jwt authentication server written in Golang with the Echo framework. 
+This is a simple jwt authentication server written in Golang with the Echo framework. It is able to set custom claims.
 Much of the code came from Echo framework's tutorial on JWT : https://echo.labstack.com/middleware/jwt
 
 Echo Framework was chosen for its lightweight and simplicity. 
@@ -27,6 +27,6 @@ $ curl localhost:1323/restricted -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsI
 
 
 ### Improvements
-- Write more functions within the Login handler so it is smaller and easily testable
+- Write more functions within the Login handler so it is smaller and easily testable. Eg. Write function to set custom claims. 
 - Write more tests especially for /restricted endpoint as well as the expiry times for each token. 
 - CI/CD deployment 
