@@ -11,20 +11,32 @@ Go Mod is used for dependency management (https://blog.golang.org/using-go-modul
 - Docker 
 
 ### How to run?
-This will trigger the Makefile to run go test, build a cointainer and run the server exposed on port :1323 
+This will trigger the Makefile to run go test, build a container and run the server exposed on port :1323
 ```
 $ make
 ```
 ### Manual Testing
+Test the server is up 
 ```
 $ curl -X GET localhost:1323/
-$ curl -X POST -d 'username=jon' -d 'password=shhh!' localhost:1323/login
-```
-Once you have logged in with those credentials specifically, you can access the private route: 
-```
-$ curl localhost:1323/restricted -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSm9uIFNub3ciLCJhZG1pbiI6dHJ1ZSwiZXhwIjoxNTY4MTc4MTQzfQ.a_S9ti_CT4VWyrLpOAAo6dVXshI0N9pZjiGfI3s_H6E"
 ```
 
+Test you can get an access token (1 day expiry) & a refresh token (7 days expiry)
+```
+$ curl -X POST -d 'username=jon' -d 'password=shhh!' localhost:1323/login
+```
+You should expect to see this reponse:
+```
+{
+  "refresh_token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSm9uIFNub3ciLCJhZG1pbiI6dHJ1ZSwiZXhwIjoxNTY4Njk4MjY5LCJzdWIiOiIxIn0.LekFS1tc0hoTJMv_EPkoUEP7tKFT-VUzHANiH09f7Jw",
+  "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSm9uIFNub3ciLCJhZG1pbiI6dHJ1ZSwiZXhwIjoxNTY4MTc5ODY5fQ.rnOv0MGrDSUW_h0Q2W9hzUdpKG-zCQdxAMPrLiAtld0"
+}
+```
+
+Once you have logged in with those credentials specifically, you can access the private route replacing the {{TOKEN}} with either the token or refresh_token from previous request: 
+```
+$ curl localhost:1323/restricted -H "Authorization: Bearer {{TOKEN}}"
+```
 
 ### Improvements
 - Write more functions within the Login handler so it is smaller and easily testable. Eg. Write function to set custom claims. 
