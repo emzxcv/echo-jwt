@@ -34,5 +34,6 @@ func main() {
 	r.Use(middleware.JWTWithConfig(config))
 	r.GET("", h.Restricted)
 
+	// Start server
 	e.Logger.Fatal(e.Start(":1323"))
 }

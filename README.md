@@ -15,8 +15,18 @@ This will trigger the Makefile to run go test, build a cointainer and run the se
 ```
 $ make
 ```
+### Manual Testing
+```
+$ curl -X GET localhost:1323/
+$ curl -X POST -d 'username=jon' -d 'password=shhh!' localhost:1323/login
+```
+Once you have logged in with those credentials specifically, you can access the private route: 
+```
+$ curl localhost:1323/restricted -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoiSm9uIFNub3ciLCJhZG1pbiI6dHJ1ZSwiZXhwIjoxNTY4MTc4MTQzfQ.a_S9ti_CT4VWyrLpOAAo6dVXshI0N9pZjiGfI3s_H6E"
+```
+
 
 ### Improvements
 - Write more functions within the Login handler so it is smaller and easily testable
-- Write more tests ( unit and integration ) 
+- Write more tests especially for /restricted endpoint as well as the expiry times for each token. 
 - CI/CD deployment 
